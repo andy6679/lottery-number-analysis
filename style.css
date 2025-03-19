@@ -1,0 +1,209 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+/* Header Styling */
+header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 2em;
+}
+
+/* Tab Styling */
+.tabs {
+    display: flex;
+    background-color: #f1f1f1;
+    justify-content: space-around;
+    padding: 10px 0;
+    flex-wrap: wrap;
+}
+
+.tablink {
+    flex: 1 1 150px; /* Allowing the tabs to shrink and grow */
+    padding: 14px;
+    cursor: pointer;
+    border: none;
+    background-color: #ddd;
+    font-weight: bold;
+    text-align: center;
+    min-width: 120px; /* Ensuring the tabs remain usable on smaller screens */
+}
+
+.tablink:hover {
+    background-color: #bbb;
+}
+
+.tabcontent {
+    display: none;
+    padding: 20px;
+    background-color: white;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: white;
+    margin: 10% auto;
+    padding: 20px;
+    width: 50%;
+    max-width: 600px; /* Add a max-width to ensure it doesn't get too wide */
+    border-radius: 5px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+/* Button Styling */
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Grid Styling for Analysis */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.grid-item {
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.grid-item:nth-child(odd) {
+    background-color: #e7f4e7;
+}
+
+.grid-item:hover {
+    background-color: #d4f1d4;
+}
+
+/* Form Inputs Styling */
+input[type="number"], input[type="file"], select {
+    padding: 10px;
+    width: 200px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width: 100%; /* Ensure the inputs do not overflow */
+}
+
+input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+/* Suggestions and Results Styling */
+#suggestionResult, #combinationsResult, #probabilityResult {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+/* Specific Styling for Modal Content */
+.modal-content h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Responsive Styling */
+@media (max-width: 1024px) {
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tablink {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns for tablets */
+    }
+
+    .modal-content {
+        width: 80%;
+    }
+
+    input[type="number"], input[type="file"], select {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tablink {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr 1fr; /* 2 columns for mobile */
+    }
+
+    .modal-content {
+        width: 90%; /* Making modal wider on small devices */
+    }
+
+    input[type="number"], input[type="file"], select {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        font-size: 1.5em; /* Smaller font for small screens */
+    }
+
+    .grid {
+        grid-template-columns: 1fr; /* Single column on very small screens */
+    }
+
+    .modal-content {
+        width: 95%; /* Ensuring modal takes almost full width on very small screens */
+    }
+}

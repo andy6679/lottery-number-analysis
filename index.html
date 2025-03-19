@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottery App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header { background: #4CAF50; color: white; text-align: center; padding: 10px; }
+        .tabs { display: flex; background: #f1f1f1; justify-content: space-around; }
+        .tablink { flex: 1; padding: 14px; cursor: pointer; border: none; background: #ddd; }
+        .tablink:hover { background: #bbb; }
+        .tabcontent { display: none; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table, th, td { border: 1px solid black; }
+        th, td { padding: 8px; text-align: center; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lottery Number Analysis and generate numbers </h1>
+        Download lottery results from the national lottery in CSV format and upload
+    </header>
+    <div class="tabs">
+        <button class="tablink" onclick="openTab(event, 'uploadTab')">Upload/Results</button>
+        <button class="tablink" onclick="openTab(event, 'analysisTab')">Analysis</button>
+        <button class="tablink" onclick="openTab(event, 'suggestionsTab')">Suggestions</button>
+        <button class="tablink" onclick="openTab(event, 'combinationsTab')">Combinations</button>
+        <button class="tablink" onclick="openTab(event, 'probabilitiesTab')">Probabilities</button>
+        <button class="tablink" onclick="openTab(event, 'DisclaimerTab')">Disclaimer</button>
+    </div>
+
+    <!-- Disclaimer Tab -->
+    <div id="DisclaimerTab" class="tabcontent">
+        <p>This app does not guarantee lottery wins. It is meant as an analysis tool to help users make informed decisions.</p>
+    </div>
+  
+    <!-- Results Tab -->
+    <div id="uploadTab" class="tabcontent">
+        <h2>Upload Lottery Results</h2>
+        <input type="file" id="fileInput">
+        <button id="uploadFile">Upload</button>
+        <div id="results"></div>
+    </div>
+
+    <!-- Analysis Tab -->
+    <div id="analysisTab" class="tabcontent">
+        <h2>Analysis</h2>
+        <div class="grid" id="analysisGrid"></div>
+    </div>
+
+    <!-- Suggestions Tab -->
+    <div id="suggestionsTab" class="tabcontent">
+        <h2>Number Suggestions</h2>
+        <button id="suggestNumbers">Generate number Suggestions</button>
+        <div id="suggestionResult"></div>
+    </div>
+
+    <!-- Combinations Tab -->
+    <div id="combinationsTab" class="tabcontent">
+        <h2>Combinations</h2>
+        <label for="comboCount">Choose combination size: </label>
+        <select id="comboCount">
+            <option value="2">2 Numbers</option>
+            <option value="3">3 Numbers</option>
+            <option value="4">4 Numbers</option>
+            <option value="5">5 Numbers</option>
+        </select>
+        <button id="generateCombinations">Generate Combinations</button>
+        <div id="combinationsResult"></div>
+    </div>
+
+    <!-- Probabilities Tab -->
+    <div id="probabilitiesTab" class="tabcontent">
+        <h2>Number Probability</h2>
+        <input type="number" id="inputNumber" placeholder="Enter a number (1-59)">
+        <button id="calculateProbability">Calculate Probability</button>
+        <div id="probabilityResult"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Open the relevant tab
+        function openTab(evt, tabName) {
+            let tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            document.getElementById(tabName).style.display = "block";
+        }
+
+        // Read and display the uploaded CSV file
+        document.getElementById("uploadFile").addEventListener("click", function() {
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Please select a file.");
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const content = event.target.result;
+                const resultsDiv = document.getElementById("results");
+
+                // Split the content by rows, then split each row by commas
+                const rows = content.split("\n");
+                const parsedData = rows.map(row => row.split(","));
+
+                // Headers for the table
+                const headers = ["DrawDate", "Ball 1", "Ball 2", "Ball 3", "Ball 4", "Ball 5", "Ball 6", "Bonus Ball", "Ball Set", "Machine", "DrawNumber"];
+                
+                let output = "<h3>Uploaded Results:</h3><table><thead><tr>";
+
+                // Add headers to the table
+                headers.forEach(header => {
+                    output += `<th>${header}</th>`;
+                });
+                output += "</tr></thead><tbody>";
+
+                // Add each row of data to the table
+                parsedData.forEach(row => {
+                    if (row.length === headers.length) {
+                        output += "<tr>";
+                        row.forEach(cell => {
+                            output += `<td>${cell.trim()}</td>`;
+                        });
+                        output += "</tr>";
+                    }
+                });
+
+                output += "</tbody></table>";
+                resultsDiv.innerHTML = output;
+            };
+
+            reader.readAsText(file);
+        });
+
+        // Generate a fresh set of random numbers (1-59)
+        function generateRandomNumbers() {
+            let numbers = new Set();
+            while (numbers.size < 6) {
+                numbers.add(Math.floor(Math.random() * 59) + 1);
+            }
+            return [...numbers];
+        }
+
+        // Generate suggestions on button click
+        document.getElementById("suggestNumbers").addEventListener("click", function() {
+            let randomNumbers = generateRandomNumbers();
+            let bonus = Math.floor(Math.random() * 59) + 1; // Random bonus number
+            document.getElementById("suggestionResult").innerText = "Suggested Numbers: " + randomNumbers.join(", ") + " | Bonus: " + bonus;
+        });
+
+        // Generate combinations based on selected count (2, 3, 4, or 5 numbers)
+        document.getElementById("generateCombinations").addEventListener("click", function() {
+            let comboCount = parseInt(document.getElementById("comboCount").value);
+            let combinations = [];
+            for (let i = 0; i < 5; i++) {
+                let numbers = new Set();
+                while (numbers.size < comboCount) {
+                    numbers.add(Math.floor(Math.random() * 59) + 1);
+                }
+                combinations.push([...numbers].join(", "));
+            }
+            document.getElementById("combinationsResult").innerText = "Combinations:\n" + combinations.join("\n");
+        });
+
+        // Calculate the probability for the entered number (using mock data for now)
+        document.getElementById("calculateProbability").addEventListener("click", function() {
+            let inputNumber = parseInt(document.getElementById("inputNumber").value);
+            if (inputNumber >= 1 && inputNumber <= 59) {
+                let probability = Math.floor(Math.random() * 100) + 1; // Random mock probability
+                document.getElementById("probabilityResult").innerText = `Probability of ${inputNumber}: ${probability}%`;
+            } else {
+                document.getElementById("probabilityResult").innerText = "Please enter a valid number between 1 and 59.";
+            }
+        });
+
+        // Dummy analysis grid (can be replaced with actual frequency data)
+        function generateAnalysisGrid() {
+            let grid = document.getElementById("analysisGrid");
+            for (let i = 1; i <= 59; i++) {
+                let gridItem = document.createElement("div");
+                gridItem.classList.add("grid-item");
+                gridItem.innerText = `#${i}\nFrequency: ${Math.floor(Math.random() * 100)}`;
+                grid.appendChild(gridItem);
+            }
+        }
+
+        // Call this function to generate the analysis grid on page load
+        generateAnalysisGrid();
+    </script>
+</body>
+</html>
