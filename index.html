@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lottery App</title>
+    
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
         header { background: #4CAF50; color: white; text-align: center; padding: 10px; }
@@ -15,10 +16,24 @@
         table, th, td { border: 1px solid black; }
         th, td { padding: 8px; text-align: center; }
     </style>
+
+    <!-- JavaScript to block direct access -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const allowedReferrer = "https://your-main-site.vercel.app"; // Replace with your main site URL
+            const referrer = document.referrer;
+
+            if (!referrer || !referrer.startsWith(allowedReferrer)) {
+                // Redirect back to the main site if accessed directly
+                window.location.href = allowedReferrer;
+            }
+        });
+    </script>
+
 </head>
 <body>
     <header>
-        <h1>Lottery Number Analysis and generate numbers </h1>
+        <h1>Lottery Number Analysis and Generate Numbers</h1>
         Download lottery results from the national lottery in CSV format and upload
     </header>
     <div class="tabs">
@@ -29,6 +44,9 @@
         <button class="tablink" onclick="openTab(event, 'probabilitiesTab')">Probabilities</button>
         <button class="tablink" onclick="openTab(event, 'DisclaimerTab')">Disclaimer</button>
     </div>
+</body>
+</html>
+
 
     <!-- Disclaimer Tab -->
     <div id="DisclaimerTab" class="tabcontent">
