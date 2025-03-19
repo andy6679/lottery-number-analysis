@@ -18,17 +18,18 @@
     </style>
 
     <!-- JavaScript to block direct access -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const allowedReferrer = "https://your-main-site.vercel.app"; // Replace with your main site URL
-            const referrer = document.referrer;
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const mainSite = "https://your-main-site.vercel.app"; // Replace with your actual main site URL
+        const referrer = document.referrer;
 
-            if (!referrer || !referrer.startsWith(allowedReferrer)) {
-                // Redirect back to the main site if accessed directly
-                window.location.href = allowedReferrer;
-            }
-        });
-    </script>
+        // If the user tries to access this page directly (no referrer) OR from an external site
+        if (!referrer || !referrer.startsWith(mainSite)) {
+            window.location.href = mainSite; // Redirect them back to the main site
+        }
+    });
+</script>
+
 
 </head>
 <body>
