@@ -18,13 +18,25 @@
     </style>
 
     <!-- JavaScript to block direct access -->
-  <script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         const mainSite = "https://your-main-site.vercel.app"; // Replace with your actual main site URL
+        const allowedDomains = [
+            "https://lottery-number-analysis.vercel.app",
+            "https://thunderball-number-analysis.vercel.app",
+            "https://euromillions-number-analysis.vercel.app",
+            "https://setforlife-number-analysis.vercel.app"
+        ]; // List of allowed sub-sites
+
         const referrer = document.referrer;
 
-        // If the user tries to access this page directly (no referrer) OR from an external site
-        if (!referrer || !referrer.startsWith(mainSite)) {
+        // Allow access if:
+        // - The user came from the main site
+        // - The user came from another sub-site
+        if (
+            !referrer || 
+            (!referrer.startsWith(mainSite) && !allowedDomains.some(domain => referrer.startsWith(domain)))
+        ) {
             window.location.href = mainSite; // Redirect them back to the main site
         }
     });
