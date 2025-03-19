@@ -17,21 +17,6 @@
         th, td { padding: 8px; text-align: center; }
     </style>
 
-    <!-- JavaScript to block direct access -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const mainSite = "https://your-main-site.vercel.app"; // Change to your actual main site URL
-        const referrer = document.referrer;
-
-        // Allow access if the referrer exists and comes from the main site or another sub-site
-        if (referrer && (referrer.startsWith(mainSite) || referrer.includes(".vercel.app"))) {
-            return; // Do nothing, allow access
-        }
-
-        // If accessed directly or from an external site, redirect to the main site
-        window.location.href = mainSite;
-    });
-</script>
 
 
 
