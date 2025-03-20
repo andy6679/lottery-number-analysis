@@ -1,36 +1,26 @@
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const mainSite = "https://your-main-website.com"; // Replace with your main site URL
+document.addEventListener("DOMContentLoaded", function () {
+    let lotteryData = [];
 
-        // Check if the referrer is empty (i.e., the user typed the URL directly)
-        if (document.referrer === "" || !document.referrer.startsWith(mainSite)) {
-            // Redirect the user to the main site if they accessed directly
-            window.location.href = mainSite;
+    // Open Tabs
+    function openTab(evt, tabName) {
+        let tabcontent = document.getElementsByClassName("tabcontent");
+        for (let i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
         }
+        document.getElementById(tabName).style.display = "block";
+    }
+    document.querySelector(".tablink").click();
 
-        let lotteryData = [];
-
-        // Open Tabs
-        function openTab(evt, tabName) {
-            let tabcontent = document.getElementsByClassName("tabcontent");
-            for (let i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            document.getElementById(tabName).style.display = "block";
-        }
-        document.querySelector(".tablink").click();
-
-        // Modal Functions
-        function showModal(id) {
-            document.getElementById(id).style.display = "block";
-        }
-        function closeModal(id) {
-            document.getElementById(id).style.display = "none";
-        }
-        document.querySelectorAll(".close").forEach(btn => {
-            btn.addEventListener("click", function () {
-                closeModal(this.parentElement.id);
-            });
+    // Modal Functions
+    function showModal(id) {
+        document.getElementById(id).style.display = "block";
+    }
+    function closeModal(id) {
+        document.getElementById(id).style.display = "none";
+    }
+    document.querySelectorAll(".close").forEach(btn => {
+        btn.addEventListener("click", function () {
+            closeModal(this.parentElement.id);
         });
     });
 </script>
