@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lottery App</title>
-    
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
         header { background: #4CAF50; color: white; text-align: center; padding: 10px; }
@@ -16,21 +15,6 @@
         table, th, td { border: 1px solid black; }
         th, td { padding: 8px; text-align: center; }
     </style>
-
- <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const allowedReferrer = "https://your-main-website.com"; // Replace with your actual main site URL
-
-        // Allow access if referrer is from the main site or if the referrer is empty (for some browser navigation)
-        if (document.referrer && !document.referrer.startsWith(allowedReferrer)) {
-            document.body.innerHTML = "<h2 style='text-align:center; color:red;'>Access Denied: Please visit the main site first.</h2>";
-            setTimeout(() => {
-                window.location.href = allowedReferrer;
-            }, 3000);
-        }
-    });
-</script>
-
 </head>
 <body>
     <header>
