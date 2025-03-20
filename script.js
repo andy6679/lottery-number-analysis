@@ -1,4 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const mainSite = "https://your-main-website.com"; // Replace with your actual main site URL
+
+    // Redirect if the user typed the URL directly (no referrer)
+    if (document.referrer === "") {
+        window.location.href = mainSite;
+    }
+
     let lotteryData = [];
 
     // Open Tabs
@@ -23,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
             closeModal(this.parentElement.id);
         });
     });
+});
+
 
     // File Upload & Parsing
     document.getElementById("uploadFile").addEventListener("click", function () {
