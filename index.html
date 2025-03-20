@@ -17,18 +17,19 @@
         th, td { padding: 8px; text-align: center; }
     </style>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const allowedReferrer = "https://your-main-website.com"; // Replace with your actual main site URL
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const allowedReferrer = "https://your-main-website.com"; // Replace with your actual main site URL
 
-            if (document.referrer.indexOf(allowedReferrer) === -1) {
-                document.body.innerHTML = "<h2 style='text-align:center; color:red;'>Access Denied: Please visit the main site first.</h2>";
-                setTimeout(() => {
-                    window.location.href = allowedReferrer;
-                }, 3000);
-            }
-        });
-    </script>
+        // Allow access if referrer is from the main site or if the referrer is empty (for some browser navigation)
+        if (document.referrer && !document.referrer.startsWith(allowedReferrer)) {
+            document.body.innerHTML = "<h2 style='text-align:center; color:red;'>Access Denied: Please visit the main site first.</h2>";
+            setTimeout(() => {
+                window.location.href = allowedReferrer;
+            }, 3000);
+        }
+    });
+</script>
 
 </head>
 <body>
